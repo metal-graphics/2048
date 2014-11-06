@@ -13,13 +13,15 @@ char title[] = "3D Shapes";
 float  brown[]  = {.5429 ,.2695 ,.074};
 float white[] = {1,1,1};
 float black[] = {0,0,0};
+float blue[] = {.8,.8,.8};
+float green[] ={.1,.9,.1};
 
 
 
 
 /* Initialize OpenGL Graphics */
 void initGL() {
-   glClearColor(.75f, .5f, .5f, 0.0f); // Set background color to black and opaque
+   glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
    glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
    glDepthFunc(GL_LEQUAL);    // Set the type of depth-test
@@ -100,12 +102,12 @@ void DrawFloor(int width, int length,float baseX,float baseY) {
 
 }
 
-void DrawTableTop(float x,float y,float z) {
+void DrawTableTop(float x,float y,float z,float legScaleX,float legScaleY,float legScaleZ,float topScaleX,float topScaleY,float topScaleZ) {
     float color[] = {.4,.2,.2};
    glLoadIdentity();                 // Reset the model-view matrix
 
    glTranslatef(x, y, z);  // Move right and into the screen
-    glScalef(4,.25,1);
+    glScalef(topScaleX,topScaleY,topScaleZ); //4,.25,1
 
 
    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
@@ -115,12 +117,12 @@ void DrawTableTop(float x,float y,float z) {
    glEnd();  // End of drawing color-cube
 }
 
-void DrawTableLeg(float x,float y,float z) {
+void DrawTableLeg(float x,float y,float z,float legScaleX,float legScaleY,float legScaleZ,float topScaleX,float topScaleY,float topScaleZ) {
    float color[] = {.4,.2,.2};
    glLoadIdentity();         // Reset the model-view matrix
 
    glTranslatef(x,y,z);  // Move left and into the screen
-   glScalef(.1,2,.1);
+   glScalef(legScaleX,legScaleY,legScaleZ); //.1,2,.1
 
 
    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
@@ -134,14 +136,51 @@ void createTable(float x,float y,float z){
      glLoadIdentity();         // Reset the model-view matrix
 
 
-     DrawTableTop(x+0,y+4,z+-6);//co-ordinates
+     DrawTableTop(x+0,y+4,z+-6,.1,2,.1,4,.25,1);//co-ordinates
      //DrawTableTop(0,4,-10);//co-ordinates
      //  DrawTableTop(0,4,-14);//co-ordinates
 
-    DrawTableLeg(x+-4+.2,y+2,z+-5);//co-ordinates
-    DrawTableLeg(x+-4+.2,y+2,z+-7);//co-ordinates
-     DrawTableLeg(x+4-.2,y+2,z+-5);//co-ordinates
-    DrawTableLeg(x+4-.2,y+2,z+-7);//co-ordinates
+    DrawTableLeg(x+-4+.2,y+2,z+-5,.1,2,.1,4,.25,1);//co-ordinates
+    DrawTableLeg(x+-4+.2,y+2,z+-7,.1,2,.1,4,.25,1);//co-ordinates
+     DrawTableLeg(x+4-.2,y+2,z+-5,.1,2,.1,4,.25,1);//co-ordinates
+    DrawTableLeg(x+4-.2,y+2,z+-7,.1,2,.1,4,.25,1);//co-ordinates
+
+
+}
+
+void createClassRoomWalls(float x,float y,float z,float scaleX,float scaleY,float scaleZ){
+
+
+    glLoadIdentity();         // Reset the model-view matrix
+
+
+
+    glTranslatef(x, y, z);  // Move right and into the screen
+    glScalef(scaleX,scaleY,scaleZ); //.1,2,.1
+
+
+    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+      // Top face (y = 1.0f)
+      // Define vertices in counter-clockwise (CCW) order with normal pointing out
+    DrawCube(blue);
+    glEnd();  // End of drawing color-cube
+
+}
+
+
+void createBench(float x,float y,float z){
+
+     glLoadIdentity();         // Reset the model-view matrix
+
+
+     DrawTableTop(x+0,y+2,z+-6,.1,2,.1,4,.125,1);//co-ordinates
+     //DrawTableTop(0,4,-10);//co-ordinates
+     //  DrawTableTop(0,4,-14);//co-ordinates
+
+    DrawTableLeg(x+-4+.2,y+1,z+-5,.1,1,.1,4,.125,1);//co-ordinates
+    DrawTableLeg(x+-4+.2,y+1,z+-7,.1,1,.1,4,.125,1);//co-ordinates
+     DrawTableLeg(x+4-.2,y+1,z+-5,.1,1,.1,4,.125,1);//co-ordinates
+    DrawTableLeg(x+4-.2,y+1,z+-7,.1,1,.1,4,.125,1);//co-ordinates
 
 
 }
@@ -157,17 +196,33 @@ void display() {
    // Render a color-cube consisting of 6 quads with different colors
 
 
-                for(i=0;i<10;i++)
-                    if(i%2==0)
-                        createTable(-6*1,4,-10*(i/2+1));
-                    else
-                        createTable(6,4,-10*(i/2+1));
+            /*Draw all the Benches*/
+                        for(i=0;i<10;i++)
+                            if(i%2==0)
+                                createTable(-6*1,2,-10*(i/2+1));
+                            else
+                                createTable(6,2,-10*(i/2+1));
+
+
+
+                     for(i=0;i<10;i++)
+                        if(i%2==0)
+                            createBench(-6*1,2,-10*(i/2+1)-5);
+                        else
+                            createBench(6,2,-10*(i/2+1)-5);
+
+        /* Draw the Class Board*/
+
+        createClassRoomWalls(0,15,-70,50,15,1); //front
+        createClassRoomWalls(-35,15,-70,.25,15,70); //left
+        createClassRoomWalls(35,15,-70,.25,15,70); //right
+        createClassRoomWalls(0,95,-35,50,50,50); //top
 
 
 
    // DrawFloor(6,6,-5,-5); //width,height,xy position
 
-    gluLookAt(0,10,-20,0,0,-30,0,1,0);
+    //gluLookAt(0,10,-20,0,0,-30,0,1,0);
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
 
