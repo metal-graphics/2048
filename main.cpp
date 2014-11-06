@@ -57,8 +57,8 @@ void DrawCube(float * color ){
     glVertex3f(-1.0f,-1.0f, 1.0f);    // Bottom Right Of The Quad (Left)
     glColor3f(color[0],color[1],color[2]);
     glVertex3f( 1.0f, 1.0f,-1.0f);    // Top Right Of The Quad (Right)
-    glVertex3f( 1.0f, 1.0f, 1.0f);    // Top Left Of The Quad (Right)
-    glVertex3f( 1.0f,-1.0f, 1.0f);    // Bottom Left Of The Quad (Right)
+    glVertex3f( -1.0f, 1.0f, 1.0f);    // Top Left Of The Quad (Right)
+    glVertex3f( -1.0f,-1.0f, 1.0f);    // Bottom Left Of The Quad (Right)
     glVertex3f( 1.0f,-1.0f,-1.0f);    // Bottom Right Of The Quad (Right)
 
 }
@@ -105,7 +105,7 @@ void DrawTableTop(float x,float y,float z) {
    glLoadIdentity();                 // Reset the model-view matrix
 
    glTranslatef(x, y, z);  // Move right and into the screen
-    glScalef(2,.25,2);
+    glScalef(4,.25,1);
 
 
    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
@@ -129,24 +129,43 @@ void DrawTableLeg(float x,float y,float z) {
    glEnd();  // End of drawing color-cube
 }
 
+void createTable(float x,float y,float z){
+
+     glLoadIdentity();         // Reset the model-view matrix
+
+
+     DrawTableTop(x+0,y+4,z+-6);//co-ordinates
+     //DrawTableTop(0,4,-10);//co-ordinates
+     //  DrawTableTop(0,4,-14);//co-ordinates
+
+    DrawTableLeg(x+-4+.2,y+2,z+-5);//co-ordinates
+    DrawTableLeg(x+-4+.2,y+2,z+-7);//co-ordinates
+     DrawTableLeg(x+4-.2,y+2,z+-5);//co-ordinates
+    DrawTableLeg(x+4-.2,y+2,z+-7);//co-ordinates
+
+
+}
 
 /* Handler for window-repaint event. Called back when the window first appears and
    whenever the window needs to be re-painted. */
 void display() {
+   int i,j;
+
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear color and depth buffers
    glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
 
    // Render a color-cube consisting of 6 quads with different colors
 
-    DrawTableTop(0,4,-6);//co-ordinates
-     //DrawTableTop(0,4,-10);//co-ordinates
-       DrawTableTop(0,4,-14);//co-ordinates
 
-    DrawTableLeg(1.8,0,-5.8);//co-ordinates
-    DrawTableLeg(1.8,0,-7.8);//co-ordinates
-     DrawTableLeg(-1.8,0,-5.8);//co-ordinates
-    DrawTableLeg(-1.8,0,-7.8);//co-ordinates
-   // DrawFloor(7,7,-5,-5); //width,height,xy position
+                for(i=0;i<10;i++)
+                    if(i%2==0)
+                        createTable(-6*1,4,-10*(i/2+1));
+                    else
+                        createTable(6,4,-10*(i/2+1));
+
+
+
+   // DrawFloor(6,6,-5,-5); //width,height,xy position
 
 
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
