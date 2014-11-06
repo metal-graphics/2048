@@ -1,0 +1,275 @@
+# depslib dependency file v1.0
+1415280359 source:c:\users\srinivas\desktop\assgn2\main.cpp
+	<windows.h>
+	<GL/glut.h>
+	<iostream>
+
+1379879797 c:\mingw\include\windows.h
+	<_mingw.h>
+	<winresrc.h>
+	<stdarg.h>
+	<windef.h>
+	<wincon.h>
+	<winbase.h>
+	<wingdi.h>
+	<winuser.h>
+	<winnls.h>
+	<winver.h>
+	<winnetwk.h>
+	<winreg.h>
+	<winsvc.h>
+	<cderr.h>
+	<dde.h>
+	<ddeml.h>
+	<dlgs.h>
+	<imm.h>
+	<lzexpand.h>
+	<mmsystem.h>
+	<nb30.h>
+	<rpc.h>
+	<shellapi.h>
+	<winperf.h>
+	<commdlg.h>
+	<winspool.h>
+	<winsock.h>
+	<ole2.h>
+
+1379878920 c:\mingw\include\_mingw.h
+	<sdkddkver.h>
+
+1379879794 c:\mingw\include\sdkddkver.h
+	<_mingw.h>
+
+1379879798 c:\mingw\include\winresrc.h
+	<_mingw.h>
+	<winuser.h>
+	<winnt.h>
+	<winver.h>
+	<dde.h>
+	<dlgs.h>
+	<commctrl.h>
+
+1379879799 c:\mingw\include\winuser.h
+	<_mingw.h>
+
+1379879798 c:\mingw\include\winnt.h
+	<_mingw.h>
+	<winerror.h>
+	<string.h>
+	<basetsd.h>
+	<pshpack4.h>
+	<poppack.h>
+
+1379879797 c:\mingw\include\winerror.h
+	<_mingw.h>
+
+1379878924 c:\mingw\include\string.h
+	<_mingw.h>
+	<stddef.h>
+
+1379879780 c:\mingw\include\basetsd.h
+	<_mingw.h>
+
+1379879792 c:\mingw\include\pshpack4.h
+
+1379879791 c:\mingw\include\poppack.h
+
+1379879799 c:\mingw\include\winver.h
+	<_mingw.h>
+
+1379879781 c:\mingw\include\dde.h
+	<_mingw.h>
+
+1379879782 c:\mingw\include\dlgs.h
+	<_mingw.h>
+
+1379879781 c:\mingw\include\commctrl.h
+	<_mingw.h>
+	<prsht.h>
+
+1379879791 c:\mingw\include\prsht.h
+	<_mingw.h>
+
+1379879797 c:\mingw\include\windef.h
+	<_mingw.h>
+	<winnt.h>
+
+1379879797 c:\mingw\include\wincon.h
+	<_mingw.h>
+
+1379879797 c:\mingw\include\winbase.h
+	<_mingw.h>
+
+1379879798 c:\mingw\include\wingdi.h
+	<_mingw.h>
+
+1379879798 c:\mingw\include\winnls.h
+	<_mingw.h>
+
+1379879798 c:\mingw\include\winnetwk.h
+	<_mingw.h>
+
+1379879798 c:\mingw\include\winreg.h
+	<_mingw.h>
+	<reason.h>
+
+1379879792 c:\mingw\include\reason.h
+	<_mingw.h>
+
+1379879799 c:\mingw\include\winsvc.h
+	<_mingw.h>
+
+1379879780 c:\mingw\include\cderr.h
+	<_mingw.h>
+
+1379879781 c:\mingw\include\ddeml.h
+	<_mingw.h>
+
+1379879784 c:\mingw\include\imm.h
+	<_mingw.h>
+
+1379879787 c:\mingw\include\lzexpand.h
+	<_mingw.h>
+
+1379879788 c:\mingw\include\mmsystem.h
+	<_mingw.h>
+
+1379879788 c:\mingw\include\nb30.h
+	<_mingw.h>
+
+1379879793 c:\mingw\include\rpc.h
+	<windows.h>
+	<_mingw.h>
+	<rpcdce.h>
+	<rpcnsi.h>
+	<rpcnterr.h>
+	<winerror.h>
+	<excpt.h>
+
+1379879793 c:\mingw\include\rpcdce.h
+	<_mingw.h>
+	<basetyps.h>
+	<rpcdcep.h>
+
+1379879780 c:\mingw\include\basetyps.h
+	<_mingw.h>
+
+1379879793 c:\mingw\include\rpcdcep.h
+	<_mingw.h>
+
+1379879793 c:\mingw\include\rpcnsi.h
+	<_mingw.h>
+
+1379879793 c:\mingw\include\rpcnterr.h
+	<_mingw.h>
+
+1379878922 c:\mingw\include\excpt.h
+	<_mingw.h>
+	<windef.h>
+
+1379879795 c:\mingw\include\shellapi.h
+	<_mingw.h>
+	<pshpack2.h>
+	<poppack.h>
+
+1379879792 c:\mingw\include\pshpack2.h
+
+1379879798 c:\mingw\include\winperf.h
+	<_mingw.h>
+
+1379879781 c:\mingw\include\commdlg.h
+	<_mingw.h>
+	<unknwn.h>
+	<prsht.h>
+
+1379879796 c:\mingw\include\unknwn.h
+	<_mingw.h>
+	<windows.h>
+	<objfwd.h>
+	<wtypes.h>
+
+1379879789 c:\mingw\include\objfwd.h
+	<_mingw.h>
+	<basetyps.h>
+
+1379879799 c:\mingw\include\wtypes.h
+	<_mingw.h>
+	<rpc.h>
+	<rpcndr.h>
+
+1379879793 c:\mingw\include\rpcndr.h
+	<_mingw.h>
+	<rpcnsip.h>
+	<objfwd.h>
+
+1379879793 c:\mingw\include\rpcnsip.h
+	<_mingw.h>
+
+1379879798 c:\mingw\include\winspool.h
+	<_mingw.h>
+
+1379879798 c:\mingw\include\winsock.h
+	<_mingw.h>
+	<windows.h>
+	<mswsock.h>
+
+1379879788 c:\mingw\include\mswsock.h
+	<_mingw.h>
+
+1379879790 c:\mingw\include\ole2.h
+	<_mingw.h>
+	<winerror.h>
+	<objbase.h>
+	<olectlid.h>
+	<oleauto.h>
+	<oleidl.h>
+
+1379879789 c:\mingw\include\objbase.h
+	<rpc.h>
+	<rpcndr.h>
+	<_mingw.h>
+	<stdlib.h>
+	<basetyps.h>
+	<wtypes.h>
+	<unknwn.h>
+	<objidl.h>
+	<cguid.h>
+
+1379878923 c:\mingw\include\stdlib.h
+	<_mingw.h>
+	<stddef.h>
+
+1379879790 c:\mingw\include\objidl.h
+	<_mingw.h>
+	<objfwd.h>
+
+1379879780 c:\mingw\include\cguid.h
+	<_mingw.h>
+
+1379879791 c:\mingw\include\olectlid.h
+	<_mingw.h>
+
+1379879790 c:\mingw\include\oleauto.h
+	<_mingw.h>
+	<oaidl.h>
+
+1379879789 c:\mingw\include\oaidl.h
+	<_mingw.h>
+	<windows.h>
+	<ole2.h>
+
+1379879791 c:\mingw\include\oleidl.h
+	<_mingw.h>
+	<objfwd.h>
+
+976647172 c:\mingw\include\gl\glut.h
+	<windows.h>
+	<GL/gl.h>
+	<GL/glu.h>
+
+1379879809 c:\mingw\include\gl\gl.h
+
+1379879810 c:\mingw\include\gl\glu.h
+	<stddef.h>
+	<GL/gl.h>
+
