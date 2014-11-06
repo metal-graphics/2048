@@ -167,7 +167,7 @@ void display() {
 
    // DrawFloor(6,6,-5,-5); //width,height,xy position
 
-
+    gluLookAt(0,10,-20,0,0,-30,0,1,0);
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
 
