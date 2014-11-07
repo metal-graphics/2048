@@ -15,6 +15,7 @@ float white[] = {1,1,1};
 float black[] = {0,0,0};
 float blue[] = {.8,.8,.8};
 float green[] ={.1,.9,.1};
+float red[] = {1,.4,.2};
 
 
 
@@ -90,14 +91,17 @@ void DrawTiles(int colorflag,float x,float y,float z) {
 
 
 
-void DrawFloor(int width, int length,float baseX,float baseY) {
+void DrawFloor(int width, int length,float baseX,float baseY,float baseZ) {
     int i,j;
 
 
     for(i=0;i<length;i++)
         for(j=0;j<width;j++)
+                DrawTiles((i+j)%2, baseX - i  , -1 ,baseZ - j);
+    for(i=0;i<length;i++)
+        for(j=0;j<width;j++)
+                DrawTiles((i+j)%2, baseX + i  , -1 ,baseZ - j);
 
-            DrawTiles((i+j)%2, baseX + i  ,baseY + j ,-6);
 
 
 }
@@ -148,7 +152,7 @@ void createTable(float x,float y,float z){
 
 }
 
-void createClassRoomWalls(float x,float y,float z,float scaleX,float scaleY,float scaleZ){
+void createClassRoomWalls(float x,float y,float z,float scaleX,float scaleY,float scaleZ,float * color ){
 
 
     glLoadIdentity();         // Reset the model-view matrix
@@ -162,7 +166,7 @@ void createClassRoomWalls(float x,float y,float z,float scaleX,float scaleY,floa
     glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
       // Top face (y = 1.0f)
       // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    DrawCube(blue);
+    DrawCube(color);
     glEnd();  // End of drawing color-cube
 
 }
@@ -213,16 +217,16 @@ void display() {
 
         /* Draw the Class Board*/
 
-        createClassRoomWalls(0,15,-70,50,15,1); //front
-        createClassRoomWalls(-35,15,-70,.25,15,70); //left
-        createClassRoomWalls(35,15,-70,.25,15,70); //right
-        createClassRoomWalls(0,95,-35,50,50,50); //top
+        createClassRoomWalls(0,15,-70,50,15,1,blue); //front
+        createClassRoomWalls(-35,15,-70,.25,15,70,green); //left
+        createClassRoomWalls(35,15,-70,.25,15,70,red); //right
+        createClassRoomWalls(0,95,-35,50,60,60,white); //top
 
 
 
-   // DrawFloor(6,6,-5,-5); //width,height,xy position
+   DrawFloor(500,500,0,0,-6); //width,height,xy position
 
-    //gluLookAt(0,10,-20,0,0,-30,0,1,0);
+
    glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
 
@@ -243,8 +247,14 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
    glMatrixMode(GL_PROJECTION);  // To operate on the Projection matrix
    glLoadIdentity();             // Reset
    // Enable perspective projection with fovy, aspect, zNear and zFar
- //  gluLookAt(0.0, 0.0, 0.0, 0.0, 0, 0.0, 0.0, 0.0, -1.0); // Default Camera Position
+ //
+ //(0,0,0,0,0,-100,0,0,-1);
    gluPerspective(90.0f, aspect, 0.1f, 100.0f);
+  // glScalef(1,1,5);
+  gluLookAt(0, 15, 0, /* look from camera XYZ */
+               0, 0, -30, /* look at the origin */
+               0, 1, 0); /* positive Y up vector */
+//               glCallList(SCENE);
 
 }
 
