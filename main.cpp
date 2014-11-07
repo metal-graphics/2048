@@ -14,10 +14,9 @@ float  brown[]  = {.5429 ,.2695 ,.074};
 float white[] = {1,1,1};
 float black[] = {0,0,0};
 float blue[] = {.8,.8,.8};
-float green[] ={.1,.9,.1};
+float green[] ={.1,1,.1};
 float red[] = {1,.4,.2};
-
-
+float cream[] = { .83,.91,.69};
 
 
 /* Initialize OpenGL Graphics */
@@ -189,6 +188,19 @@ void createBench(float x,float y,float z){
 
 }
 
+void createBoard() {
+     glLoadIdentity();
+        glTranslatef(0, 15, -60);  // Move right and into the screen
+    glScalef(9,3,.1);
+
+
+    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+      // Top face (y = 1.0f)
+      // Define vertices in counter-clockwise (CCW) order with normal pointing out
+    DrawCube(black);
+    glEnd();  // End of drawing color-cube
+}
+
 /* Handler for window-repaint event. Called back when the window first appears and
    whenever the window needs to be re-painted. */
 void display() {
@@ -203,25 +215,25 @@ void display() {
             /*Draw all the Benches*/
                         for(i=0;i<10;i++)
                             if(i%2==0)
-                                createTable(-6*1,2,-10*(i/2+1));
+                                createTable(-6*1,2,-10*(i/2+1)), createTable(-6*3,2,-10*(i/2+1));
                             else
-                                createTable(6,2,-10*(i/2+1));
+                                createTable(6,2,-10*(i/2+1)),createTable(6*3,2,-10*(i/2+1));
 
 
 
                      for(i=0;i<10;i++)
                         if(i%2==0)
-                            createBench(-6*1,2,-10*(i/2+1)-5);
+                            createBench(-6*1,2,-10*(i/2+1)+4), createBench(-6*3,2,-10*(i/2+1)+4);
                         else
-                            createBench(6,2,-10*(i/2+1)-5);
+                            createBench(6,2,-10*(i/2+1)+4), createBench(6*3,2,-10*(i/2+1)+4);
 
         /* Draw the Class Board*/
 
-        createClassRoomWalls(0,15,-70,50,15,1,blue); //front
-        createClassRoomWalls(-35,15,-70,.25,15,70,green); //left
+        createClassRoomWalls(0,15,-70,50,15,1,cream); //front
+        createClassRoomWalls(-35,15,-70,.25,15,70,red); //left
         createClassRoomWalls(35,15,-70,.25,15,70,red); //right
         createClassRoomWalls(0,95,-35,50,60,60,white); //top
-
+    createBoard();
 
 
    DrawFloor(500,500,0,0,-6); //width,height,xy position
@@ -251,7 +263,7 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
  //(0,0,0,0,0,-100,0,0,-1);
    gluPerspective(90.0f, aspect, 0.1f, 100.0f);
   // glScalef(1,1,5);
-  gluLookAt(0, 15, 0, /* look from camera XYZ */
+  gluLookAt(0, 25, 0, /* look from camera XYZ */
                0, 0, -30, /* look at the origin */
                0, 1, 0); /* positive Y up vector */
 //               glCallList(SCENE);
