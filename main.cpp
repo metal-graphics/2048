@@ -4,25 +4,33 @@
 #include <windows.h>  // for MS Windows
 #include <GL/glut.h>  // GLUT, include glu.h and gl.h
 #include<iostream>
+#include<algorithm>
+#include "2048.cpp"
 using namespace std;
 
 /* Global variables */
-char title[] = "3D Shapes";
+char title[] = "2048";
 
 /*Define some colors*/
-float  brown[]  = {0.65 ,0.5 ,0.39};
+float quartz[]={0.847059,0.847059,0.74902};
 float white[] = {1,1,1};
-float black[] = {0,0,0};
-float blue[] = {.8,.8,.8};
-float green[] ={.1,1,.1};
-float red[] = {1,.4,.2};
-float cream[] = { .83,.91,.69};
-float cream1[] = { .78,.80,.76};
-float cyan[]={0.678431,0.917647,0.917647};
-float olive[]={0.309804,0.309804,0.184314};
-float wood[]={0.52,0.37,0.26};
-float choc[]={0.36,0.2,0.09};
+float wheat[]={0.83,0.847059,0.74902};
+
+float yellow[]={1,1,0}; //2048
+float yellowish[]={1,0.9,0};  //1024
+float yell_orng[]={1,0.9,0.2};  //512
+float orng_yell[]={1,0.9,0.5};  //256
+float orng[]={1,1,0.6};       //128
+float orange[]={1,0.6,0};  //64
+float orn[]={1,0.7,1};          //32
+float orangish[]={0.8,0.5,0};  //16
+float ong[]={1,0.7,0.5};           //8
+float wheatish[]={0.9,0.8,0.6};           //4
+float  grey[]={0.9,0.9,0.8};          //2
 /* Initialize OpenGL Graphics */
+float cubecolor[] = {0,0,0}; //color of each cube in the 2048 puzzle,initial value doesn't matter
+
+
 void initGL() {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
@@ -67,264 +75,166 @@ void DrawCube(float * color ){
     glVertex3f( 1.0f,-1.0f,-1.0f);    // Bottom Right Of The Quad (Right)
 
 }
-void DrawTiles(int colorflag,float x,float y,float z) {
-   float cubefacecolor[] = {0.329412,0.329412,0.329412};
-    glScalef(1,1,1);
-   glLoadIdentity();                 // Reset the model-view matrix
+
+
+void createCube(float x,float y,float z,float sx,float sy,float sz,float *color)
+{
+
+    glLoadIdentity();                 // Reset the model-view matrix
+
    glTranslatef(x, y, z);  // Move right and into the screen
+    glScalef(sx,sy,sz); //4,.25,1
 
 
-   //colorflag = 1 => white cube
-   //colorflag =  0 => black cube
-    if(colorflag == 1){
-            //cout<<"here";
-        cubefacecolor[0] = 0.752941;
-        cubefacecolor[1] =0.752941 ;
-        cubefacecolor[2] = 0.752941;
+   glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
+      // Top face (y = 1.0f)
+      // Define vertices in counter-clockwise (CCW) order with normal pointing out
+    DrawCube(color);
+   glEnd();
+}
+
+
+void changeColor(int i,int j) {
+    int value;
+
+    value = getNumber(i,j);
+    //cout<<"VALUE IS "<<getNumber(i,j)<<endl;
+
+     switch (value)
+    {
+        case 0:
+           cubecolor[0]=white[0];
+            cubecolor[1]=white[1];
+             cubecolor[2]=white[2];
+            //cout<<"Color 0"<<endl;
+            break;
+        case 2:
+            cubecolor[0]=grey[0];
+             cubecolor[1]=grey[1];
+              cubecolor[2]=grey[2];
+              // cout<<"Color 2"<<endl;
+            break;
+        case 4:
+            cubecolor[0]=wheatish[0];
+             cubecolor[1]=wheatish[1];
+              cubecolor[2]=wheatish[2];
+             //  cout<<"Color 4"<<endl;
+            break;
+        case 8:
+            cubecolor[0]=ong[0];
+            cubecolor[1]=ong[1];
+            cubecolor[2]=ong[2];
+            // cout<<"Color 8"<<endl;
+            break;
+        case 16:
+            cubecolor[0]=orangish[0];
+            cubecolor[1]=orangish[1];
+            cubecolor[2]=orangish[2];
+            // cout<<"Color 16"<<endl;
+            break;
+        case 32:
+            cubecolor[0]=orn[0];
+             cubecolor[1]=orn[1];
+              cubecolor[2]=orn[2];
+            //   cout<<"Color 32"<<endl;
+            break;
+        case 64:
+            cubecolor[0]=orange[0];
+            cubecolor[1]=orange[1];
+            cubecolor[2]=orange[2];
+           //  cout<<"Color 64"<<endl;
+            break;
+        case 128:
+            cubecolor[0]=orng[0];
+            cubecolor[1]=orng[1];
+            cubecolor[2]=orng[2];
+           //  cout<<"Color 128"<<endl;
+            break;
+        case 256:
+            cubecolor[0]=orng_yell[0];
+            cubecolor[1]=orng_yell[1];
+            cubecolor[2]=orng_yell[2];
+            // cout<<"Color 256"<<endl;
+            break;
+        case 512:
+            cubecolor[0]=yell_orng[0];
+            cubecolor[1]=yell_orng[1];
+            cubecolor[2]=yell_orng[2];
+           //  cout<<"Color 512"<<endl;
+            break;
+        case 1024:
+            cubecolor[0]=yellowish[0];
+              cubecolor[1]=yellowish[1];
+                cubecolor[2]=yellowish[2];
+              //   cout<<"Color 1024"<<endl;
+            break;
+        case 2048:
+            cubecolor[0]=yellow[0];
+             cubecolor[1]=yellow[1];
+              cubecolor[2]=yellow[2];
+             //  cout<<"Color 2048"<<endl;
     }
 
 
-   glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-       DrawCube(cubefacecolor);
-   glEnd();  // End of drawing color-cube
-}
-
-
-
-void DrawFloor(int width, int length,float baseX,float baseY,float baseZ) {
-    int i,j;
-
-
-    for(i=0;i<length;i++)
-        for(j=0;j<width;j++)
-        {
-
-                DrawTiles((i+j)%2+1, baseX - i  , -1 ,baseZ - j);
-        }
-    for(i=0;i<length;i++)
-        for(j=0;j<width;j++)
-                //if(i==0 && j==0)
-             //DrawTiles((i+j)%2-0.5, baseX +i  , -1 ,baseZ - j);
-
-               //else
-                DrawTiles((i+j)%2, baseX + i  , -1 ,baseZ - j);
-
-
-
-}
-
-void DrawTableTop(float x,float y,float z,float legScaleX,float legScaleY,float legScaleZ,float topScaleX,float topScaleY,float topScaleZ,float *color) {
-    //float color[] = {.4,.2,.2};
-   glLoadIdentity();                 // Reset the model-view matrix
-
-   glTranslatef(x, y, z);  // Move right and into the screen
-    glScalef(topScaleX,topScaleY,topScaleZ); //4,.25,1
-
-
-   glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    DrawCube(color);
-   glEnd();  // End of drawing color-cube
-}
-
-void DrawTableLeg(float x,float y,float z,float legScaleX,float legScaleY,float legScaleZ,float topScaleX,float topScaleY,float topScaleZ,float *color) {
-   //float color[] = {.4,.2,.2};
-   glLoadIdentity();         // Reset the model-view matrix
-
-   glTranslatef(x,y,z);  // Move left and into the screen
-   glScalef(legScaleX,legScaleY,legScaleZ); //.1,2,.1
-
-
-   glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      DrawCube(color);
-
-   glEnd();  // End of drawing color-cube
-}
-
-void createTable(float x,float y,float z){
-
-     glLoadIdentity();         // Reset the model-view matrix
-
-
-     DrawTableTop(x+0,y+4,z+-6,.1,2,.1,4,.35,1,brown);//co-ordinates
-     //DrawTableTop(0,4,-10);//co-ordinates
-     //  DrawTableTop(0,4,-14);//co-ordinates
-
-    DrawTableLeg(x+-4+.2,y+2,z+-5,.15,2,.1,2,.25,1,brown);//co-ordinates
-    DrawTableLeg(x+-4+.2,y+2,z+-7,.15,2,.1,2,.25,1,brown);//co-ordinates
-     DrawTableLeg(x+4-.2,y+2,z+-5,.15,2,.1,2,.25,1,brown);//co-ordinates
-    DrawTableLeg(x+4-.2,y+2,z+-7,.15,2,.1,2,.25,1,brown);//co-ordinates
-
-
-}
-
-void createClassRoomWalls(float x,float y,float z,float scaleX,float scaleY,float scaleZ,float * color ){
-
-
-    glLoadIdentity();         // Reset the model-view matrix
-
-
-
-    glTranslatef(x, y, z);  // Move right and into the screen
-    glScalef(scaleX,scaleY,scaleZ); //.1,2,.1
-
-
-    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    DrawCube(color);
-    glEnd();  // End of drawing color-cube
 
 }
 
 
-void createBench(float x,float y,float z){
-
-     glLoadIdentity();         // Reset the model-view matrix
-
-
-     DrawTableTop(x+0,y+2,z+-6,.1,2,.1,4,.125,1,olive);//co-ordinates
-     //DrawTableTop(0,4,-10);//co-ordinates
-     //  DrawTableTop(0,4,-14);//co-ordinates
-
-    DrawTableLeg(x+-4+.2,y+1,z+-5,.1,1,.1,4,.125,1,olive);//co-ordinates
-    DrawTableLeg(x+-4+.2,y+1,z+-7,.1,1,.1,4,.125,1,olive);//co-ordinates
-     DrawTableLeg(x+4-.2,y+1,z+-5,.1,1,.1,4,.125,1,olive);//co-ordinates
-    DrawTableLeg(x+4-.2,y+1,z+-7,.1,1,.1,4,.125,1,olive);//co-ordinates
-
-
-}
-
-void createBoard() {
-     glLoadIdentity();
-        glTranslatef(0, 15, -60);  // Move right and into the screen
-    glScalef(19,6,.1);
-
-
-    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    DrawCube(black);
-
-    glEnd();  // End of drawing color-cube
-}
-
-
-void createDoor(float *color,float sx,float sy,float sz) {
-     glLoadIdentity();
-        glTranslatef(43.7, 3, -56);  // Move right and into the screen
-    glScalef(sx,sy,sz);
-
-
-    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    DrawCube(color);
-    glEnd();  // End of drawing color-cube
-}
-
-
-
-void createLight() {
-     glLoadIdentity();
-        glTranslatef(0, 25, -60);  // Move right and into the screen
-    glScalef(13,0.3,.1);
-
-
-    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    DrawCube(white);
-
-    glEnd(); // End of drawing color-cube
-}
-
-void createBook(float *color,float x,float y,float z) {
-     glLoadIdentity();
-        glTranslatef(x,y,z);  // Move right and into the screen
-    glScalef(0.5,0.25,.25);
-
-
-    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    DrawCube(color);
-
-    glEnd(); // End of drawing color-cube
-}
-
-/*void drawStage(float *color)
-{
-     glLoadIdentity();
-        glTranslatef(0, 15, -60);  // Move right and into the screen
-    glScalef(20,0,10);
-
-
-    glBegin(GL_QUADS);                // Begin drawing the color cube with 6 quads
-      // Top face (y = 1.0f)
-      // Define vertices in counter-clockwise (CCW) order with normal pointing out
-    DrawCube(color);
-
-    glEnd();
-}*/
 
 /* Handler for window-repaint event. Called back when the window first appears and
    whenever the window needs to be re-painted. */
 void display() {
-   int i,j;
+   int value;
 
    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clear color and depth buffers
    glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
 
    // Render a color-cube consisting of 6 quads with different colors
-                        createTable(0, 2, -50);
+                        createCube(0,0.2,-50,2, 2,0.1,quartz);
 
-            /*Draw all the Benches*/
-                        for(i=0;i<6;i++)
-                            if(i%2==0)
-                                createTable(-8*1,2,-12*(i/2+1)), createTable(-6*3,2,-12*(i/2+1));
-                            else
-                                createTable(8,2,-12*(i/2+1)),createTable(6*3,2,-12*(i/2+1));
+    cout<<"In Display Function"<<endl;
 
+changeColor(0,0);
+ createCube(-1.5,1.7,-50,0.4,0.4,0.1,cubecolor);
+ changeColor(1,0);
+ createCube(-1.5,0.7,-50,0.4,0.4,0.1,cubecolor);
+changeColor(2,0);
+ createCube(-1.5,-0.3,-50,0.4,0.4,0.1,cubecolor);
+  changeColor(3,0);
+ createCube(-1.5,-1.3,-50,0.4,0.4,0.1,cubecolor);
 
+changeColor(0,1);
+ createCube(-0.5,1.7,-50,0.4,0.4,0.1,cubecolor);
+  changeColor(1,1);
+ createCube(-0.5,0.7,-50,0.4,0.4,0.1,cubecolor);
+ changeColor(2,1);
+ createCube(-0.5,-0.3,-50,0.4,0.4,0.1,cubecolor);
+ changeColor(3,1);
+ createCube(-0.5,-1.3,-50,0.4,0.4,0.1,cubecolor);
 
-                     for(i=0;i<6;i++)
-                        if(i%2==0)
-                            createBench(-8*1,2,-12*(i/2+1)+4), createBench(-6*3,2,-12*(i/2+1)+4);
-                        else
-                            createBench(8,2,-12*(i/2+1)+4), createBench(6*3,2,-12*(i/2+1)+4);
+ changeColor(0,2);
+ createCube(0.5,1.7,-50,0.4,0.4,0.1,cubecolor);
+changeColor(1,2);
+ createCube(0.5,0.7,-50,0.4,0.4,0.1,cubecolor);
+ changeColor(2,2);
+ createCube(0.5,-0.3,-50,0.4,0.4,0.1,cubecolor);
+changeColor(3,2);
+ createCube(0.5,-1.3,-50,0.4,0.4,0.1,cubecolor);
 
-        /* Draw the Class Board*/
+changeColor(0,3);
+ createCube(1.5,1.7,-50,0.4,0.4,0.1,cubecolor);
+ changeColor(1,3);
+ createCube(1.5,0.7,-50,0.4,0.4,0.1,cubecolor);
+ changeColor(2,3);
+ createCube(1.5,-0.3,-50,0.4,0.4,0.1,cubecolor);
+changeColor(3,3);
+ createCube(1.5,-1.3,-50,0.4,0.4,0.1,cubecolor);
 
-        createClassRoomWalls(0,15,-70,50,15,1,cream1); //front
-        createClassRoomWalls(-35,15,-70,.25,15,70,cream); //left
-        createClassRoomWalls(35,15,-70,.25,15,70,cream); //right
-        createClassRoomWalls(0,95,-35,50,60,60,white); //top
-    createBoard();
+       glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 
-    createDoor(choc,9,16,9);
-    createDoor(wood,9,15,8);
-
-
-    createLight();
-
-    createBook(black,2.5, 6.5, -52);
-    createBook(cyan,2.5, 6.75, -52);
-
-   DrawFloor(500,500,0,0,-6); //width,height,xy position
-
-
-   glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }
 
 
-
-
-/* Handler for window re-size event. Called back when the window first appears and
-   whenever the window is re-sized with its new width and height */
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
    // Compute aspect ratio of the new window
    if (height == 0) height = 1;                // To prevent divide by 0
@@ -336,22 +246,51 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
    // Set the aspect ratio of the clipping volume to match the viewport
    glMatrixMode(GL_PROJECTION);  // To operate on the Projection matrix
    glLoadIdentity();             // Reset
-   // Enable perspective projection with fovy, aspect, zNear and zFar
- //
- //(0,0,0,0,0,-100,0,0,-1);
-   gluPerspective(90.0f, aspect, 0.1f, 100.0f);
 
- // glOrtho(-20,20,20,20,0,-100);
-  // glScalef(1,1,5);
-  gluLookAt(1, 12, -5, /* look from camera XYZ */
-               0, 0, -30, /* look at the origin */
-               0, 1, 0); /* positive Y up vector */
-//               glCallList(SCENE);
-
+   // Set up orthographic projection view [NEW]
+   if (width >= height) {
+     // aspect >= 1, set the height from -1 to 1, with larger width
+      glOrtho(-3.0 * aspect, 3.0 * aspect, -3.0, 3.0, 0.1, 100);
+   } else {
+      // aspect < 1, set the width to -1 to 1, with larger height
+     glOrtho(-3.0, 3.0, -3.0 / aspect, 3.0 / aspect, 0.1, 100);
+   }
 }
 
-/* Main function: GLUT runs as a console application starting at main() */
+void keyPressed(unsigned char key,int x,int y) {
+
+            cout<<"Irrelevant key pressed";
+}
+
+void specialKeypressed(int key,int x,int y) {
+    switch (key) {
+        case GLUT_KEY_LEFT:
+            cout<<"Left Key Pressed"<<endl;
+            moveLeft();
+            glutPostRedisplay();
+            break;
+        case GLUT_KEY_RIGHT:
+            moveRight();
+            glutPostRedisplay();
+            cout<<"Right Key Pressed"<<endl;
+            break;
+        case GLUT_KEY_UP:
+            cout<<"Up Key Pressed"<<endl;
+            moveUp();
+            glutPostRedisplay();
+            break;
+        case GLUT_KEY_DOWN:
+            cout<<"Down Key Pressed"<<endl;
+            moveDown();
+            glutPostRedisplay();
+            break;
+ }
+}
+
+
+/* Main function: GLUT s as a console application starting at main() */
 int main(int argc, char** argv) {
+   initializeBoard();
 
    glutInit(&argc, argv);            // Initialize GLUT
    glutInitDisplayMode(GLUT_DOUBLE); // Enable double buffered mode
@@ -361,6 +300,9 @@ int main(int argc, char** argv) {
    glutDisplayFunc(display);       // Register callback handler for window re-paint event
    glutReshapeFunc(reshape);       // Register callback handler for window re-size event
    initGL();                       // Our own OpenGL initialization
+   glutKeyboardFunc(keyPressed); // Tell GLUT to use the method "keyPressed" for key presses
+  glutSpecialFunc(specialKeypressed);
+
    glutMainLoop();                 // Enter the infinite event-processing loop
    return 0;
 }
