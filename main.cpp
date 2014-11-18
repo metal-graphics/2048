@@ -1,10 +1,14 @@
 /*
  * OGL01Shape3D.cpp: 3D Shapes
  */
-#include <windows.h>  // for MS Windows
-#include <GL/glut.h>  // GLUT, include glu.h and gl.h
+//#include <windows.h>  // for MS Windows
+#include<GL/freeglut.h> //Comment this if you are in Ubuntu
+#include <GL/gl.h>  
 #include<iostream>
 #include<algorithm>
+#include<cmath>
+//#include<conio.h> Uncomment this if you are in Windows
+#include <SOIL/src/SOIL.h> //path to the SOIL package
 #include "2048.cpp"
 using namespace std;
 
@@ -29,7 +33,124 @@ float wheatish[]={0.9,0.8,0.6};           //4
 float  grey[]={0.9,0.9,0.8};          //2
 /* Initialize OpenGL Graphics */
 float cubecolor[] = {0,0,0}; //color of each cube in the 2048 puzzle,initial value doesn't matter
+GLuint tex_2d[12]; //0,2,4,8,16,32,64,128,256,512,1024,2048
 
+
+void loadTextures() {
+	
+	  tex_2d[0] = SOIL_load_OGL_texture
+	(
+		"./pictures/0.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	  tex_2d[1] = SOIL_load_OGL_texture
+	(
+		"./pictures/2.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	  tex_2d[2] = SOIL_load_OGL_texture
+	(
+		"./pictures/4.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	tex_2d[3] = SOIL_load_OGL_texture
+	(
+		"./pictures/8.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	  tex_2d[4] = SOIL_load_OGL_texture
+	(
+		"./pictures/16.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	  tex_2d[5] = SOIL_load_OGL_texture
+	(
+		"./pictures/32.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	 tex_2d[6] = SOIL_load_OGL_texture
+	(
+		"./pictures/64.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	tex_2d[7] = SOIL_load_OGL_texture
+	(
+		"./pictures/128.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	 tex_2d[8] = SOIL_load_OGL_texture
+	(
+		"./pictures/256.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	  tex_2d[9] = SOIL_load_OGL_texture
+	(
+		"./pictures/512.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	  tex_2d[10] = SOIL_load_OGL_texture
+	(
+		"./pictures/1024.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	tex_2d[11] = SOIL_load_OGL_texture
+	(
+		"./pictures/2048.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
+	glBindTexture(GL_TEXTURE_2D, tex_2d[0]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[1]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[2]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[3]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[4]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[5]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[6]);
+	glBindTexture(GL_TEXTURE_2D,tex_2d[7]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[8]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[9]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[10]);
+	glBindTexture(GL_TEXTURE_2D, tex_2d[11]);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+	
+	
+} //loadTextures
 
 void initGL() {
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
@@ -38,6 +159,10 @@ void initGL() {
    glDepthFunc(GL_LEQUAL);    // Set the type of depth-test
    glShadeModel(GL_SMOOTH);   // Enable smooth shading
    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
+   
+   /* Load Textures*/
+  loadTextures();
+
 }
 
 
@@ -259,7 +384,7 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
 
 void keyPressed(unsigned char key,int x,int y) {
 
-            cout<<"Irrelevant key pressed";
+            cout<<"Irrelevant key pressed"<<endl;
 }
 
 void specialKeypressed(int key,int x,int y) {

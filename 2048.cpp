@@ -6,7 +6,6 @@
 #include<stack>
 #include<cmath>
 #include<cstdlib>
-#include<conio.h>
 #include<cstdio>
 #include<cstdlib>
 #include <time.h>
