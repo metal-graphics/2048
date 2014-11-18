@@ -1,6 +1,3 @@
-/*
- * OGL01Shape3D.cpp: 3D Shapes
- */
 //#include <windows.h>  // for MS Windows
 #include<GL/freeglut.h> //Comment this if you are in Ubuntu
 #include <GL/gl.h>  
@@ -143,10 +140,13 @@ void loadTextures() {
 	);
 	
 	glBindTexture(GL_TEXTURE_2D, tex_2d[0]);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
 	
 	
+
 } //loadTextures
 
 void initGL() {
@@ -159,7 +159,7 @@ void initGL() {
    glShadeModel(GL_SMOOTH);   // Enable smooth shading
    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
    
- //  glEnable (GL_BLEND);
+    glEnable (GL_BLEND);
   // glBlendFunc (GL_SRC_ALPHA, GL_ONE);
    glEnable(GL_TEXTURE_2D);
    glEnable(GL_POINT_SPRITE);
@@ -170,23 +170,75 @@ void initGL() {
 
 }
 
+void bindTexture(int i ) {
+	int img_width, img_height;
+    unsigned char* img;
+  
+    switch (i)
+    {
+        case 0:
+            img = SOIL_load_image("./pictures/0.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 2:
+              img = SOIL_load_image("./pictures/2.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 4:
+              img = SOIL_load_image("./pictures/4.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 8:
+            img = SOIL_load_image("./pictures/8.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 16:
+            img = SOIL_load_image("./pictures/16.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 32:
+             img = SOIL_load_image("./pictures/32.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 64:
+          img = SOIL_load_image("./pictures/64.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 128:
+             img = SOIL_load_image("./pictures/128.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 256:
+          img = SOIL_load_image("./pictures/256.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 512:
+             img = SOIL_load_image("./pictures/512.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 1024:
+            img = SOIL_load_image("./pictures/1024.png", &img_width, &img_height, NULL, 0);
+            break;
+        case 2048:
+          img = SOIL_load_image("./pictures/2048.png", &img_width, &img_height, NULL, 0);
+    }
+ 
+  glGenTextures(1, &tex_2d[i]);
+  glBindTexture(GL_TEXTURE_2D, tex_2d[i]);
+   glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+  //glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, img_width, img_height, 0, GL_RGB, GL_UNSIGNED_BYTE, img);
+	
+}
+
 
 void DrawCube(float * color ){
-	glBindTexture(GL_TEXTURE_2D, tex_2d[1]);
-    glColor3f(color[0],color[1],color[2]);
-    glVertex3f( 1.0f, 1.0f,-1.0f);    // Top Right Of The Quad (Top)
+	
+   /* glColor3f(color[0],color[1],color[2]);  // Top Right Of The Quad (Top)
     glVertex3f(-1.0f, 1.0f,-1.0f);    // Top Left Of The Quad (Top)
     glVertex3f(-1.0f, 1.0f, 1.0f);    // Bottom Left Of The Quad (Top)
     glVertex3f( 1.0f, 1.0f, 1.0f);    // Bottom Right Of The Quad (Top)
-   glColor3f(color[0],color[1],color[2]);
+    glColor3f(color[0],color[1],color[2]);
     glVertex3f( 1.0f,-1.0f, 1.0f);    // Top Right Of The Quad (Bottom)
     glVertex3f(-1.0f,-1.0f, 1.0f);    // Top Left Of The Quad (Bottom)
     glVertex3f(-1.0f,-1.0f,-1.0f);    // Bottom Left Of The Quad (Bottom)
     glVertex3f( 1.0f,-1.0f,-1.0f);    // Bottom Right Of The Quad (Bottom)
     glColor3f(color[0],color[1],color[2]);
-    glVertex3f( 1.0f, 1.0f, 1.0f);    // Top Right Of The Quad (Front)
-    glVertex3f(-1.0f, 1.0f, 1.0f);    // Top Left Of The Quad (Front)
-    glVertex3f(-1.0f,-1.0f, 1.0f);    // Bottom Left Of The Quad (Front)
+     glVertex3f( 1.0f, 1.0f, 1.0f);    // Top Right Of The Quad (Front)
+     glVertex3f(-1.0f, 1.0f, 1.0f);    // Top Left Of The Quad (Front)
+     glVertex3f(-1.0f,-1.0f, 1.0f);    // Bottom Left Of The Quad (Front)
     glVertex3f( 1.0f,-1.0f, 1.0f);    // Bottom Right Of The Quad (Front)
     glColor3f(color[0],color[1],color[2]);
     glVertex3f( 1.0f,-1.0f,-1.0f);    // Top Right Of The Quad (Back)
@@ -202,7 +254,21 @@ void DrawCube(float * color ){
     glVertex3f( 1.0f, 1.0f,-1.0f);    // Top Right Of The Quad (Right)
     glVertex3f( -1.0f, 1.0f, 1.0f);    // Top Left Of The Quad (Right)
     glVertex3f( -1.0f,-1.0f, 1.0f);    // Bottom Left Of The Quad (Right)
-    glVertex3f( 1.0f,-1.0f,-1.0f);    // Bottom Right Of The Quad (Right)
+    glVertex3f( 1.0f,-1.0f,-1.0f);    // Bottom Right Of The Quad (Right)*/
+    glNormal3d (0, 0, 1);
+    glBegin(GL_POLYGON); 
+   
+ 
+glTexCoord2d (1, 1); // set the UV coordinates to use for next vertex
+glVertex3d (1, 1, 1);
+//glTexCoord2d (-1, 1); // set the UV coordinates to use for next vertex
+glVertex3d (-1, 1, 1);
+//glTexCoord2d (-1, -1); // set the UV coordinates to use for next vertex
+glVertex3d (-1, -1, 1);
+//glTexCoord2d (1, -1); // set the UV coordinates to use for next vertex
+glVertex3d (1, -1, 1);
+ 
+glEnd();
 
 }
 
@@ -236,20 +302,23 @@ void changeColor(int i,int j) {
            cubecolor[0]=white[0];
             cubecolor[1]=white[1];
              cubecolor[2]=white[2];
-             glBindTexture(GL_TEXTURE_2D, tex_2d[0]);
+            glBindTexture(GL_TEXTURE_2D, tex_2d[0]);
+             //bindTexture(0);
             //cout<<"Color 0"<<endl;
             break;
         case 2:
             cubecolor[0]=grey[0];
              cubecolor[1]=grey[1];
               cubecolor[2]=grey[2];
-              glBindTexture(GL_TEXTURE_2D, tex_2d[1]);
+             //bindTexture(1);
+             glBindTexture(GL_TEXTURE_2D, tex_2d[1]);
               // cout<<"Color 2"<<endl;
             break;
         case 4:
             cubecolor[0]=wheatish[0];
              cubecolor[1]=wheatish[1];
               cubecolor[2]=wheatish[2];
+             // bindTexture(2);
               glBindTexture(GL_TEXTURE_2D, tex_2d[2]);
              //  cout<<"Color 4"<<endl;
             break;
@@ -257,6 +326,7 @@ void changeColor(int i,int j) {
             cubecolor[0]=ong[0];
             cubecolor[1]=ong[1];
             cubecolor[2]=ong[2];
+          //  bindTexture(3);
             glBindTexture(GL_TEXTURE_2D, tex_2d[3]);
             // cout<<"Color 8"<<endl;
             break;
@@ -264,6 +334,7 @@ void changeColor(int i,int j) {
             cubecolor[0]=orangish[0];
             cubecolor[1]=orangish[1];
             cubecolor[2]=orangish[2];
+           // bindTexture(4);
             glBindTexture(GL_TEXTURE_2D, tex_2d[4]);
             // cout<<"Color 16"<<endl;
             break;
@@ -271,6 +342,7 @@ void changeColor(int i,int j) {
             cubecolor[0]=orn[0];
              cubecolor[1]=orn[1];
               cubecolor[2]=orn[2];
+            //  bindTexture(5);
               glBindTexture(GL_TEXTURE_2D, tex_2d[5]);
             //   cout<<"Color 32"<<endl;
             break;
@@ -278,13 +350,15 @@ void changeColor(int i,int j) {
             cubecolor[0]=orange[0];
             cubecolor[1]=orange[1];
             cubecolor[2]=orange[2];
-            glBindTexture(GL_TEXTURE_2D, tex_2d[6]);
+           // bindTexture(6);
+           glBindTexture(GL_TEXTURE_2D, tex_2d[6]);
            //  cout<<"Color 64"<<endl;
             break;
         case 128:
             cubecolor[0]=orng[0];
             cubecolor[1]=orng[1];
             cubecolor[2]=orng[2];
+            //bindTexture(7);
             glBindTexture(GL_TEXTURE_2D, tex_2d[7]);
            //  cout<<"Color 128"<<endl;
             break;
@@ -292,6 +366,7 @@ void changeColor(int i,int j) {
             cubecolor[0]=orng_yell[0];
             cubecolor[1]=orng_yell[1];
             cubecolor[2]=orng_yell[2];
+           // bindTexture(8);
             glBindTexture(GL_TEXTURE_2D, tex_2d[8]);
             // cout<<"Color 256"<<endl;
             break;
@@ -299,6 +374,7 @@ void changeColor(int i,int j) {
             cubecolor[0]=yell_orng[0];
             cubecolor[1]=yell_orng[1];
             cubecolor[2]=yell_orng[2];
+           // bindTexture(9);
             glBindTexture(GL_TEXTURE_2D, tex_2d[9]);
            //  cout<<"Color 512"<<endl;
             break;
@@ -306,6 +382,7 @@ void changeColor(int i,int j) {
             cubecolor[0]=yellowish[0];
               cubecolor[1]=yellowish[1];
                 cubecolor[2]=yellowish[2];
+               // bindTexture(10);
                 glBindTexture(GL_TEXTURE_2D, tex_2d[10]);
               //   cout<<"Color 1024"<<endl;
             break;
@@ -313,6 +390,7 @@ void changeColor(int i,int j) {
             cubecolor[0]=yellow[0];
              cubecolor[1]=yellow[1];
               cubecolor[2]=yellow[2];
+             // bindTexture(11);
               glBindTexture(GL_TEXTURE_2D, tex_2d[11]);
              //  cout<<"Color 2048"<<endl;
     }
@@ -374,6 +452,7 @@ changeColor(3,3);
  createCube(1.5,-1.3,-50,0.4,0.4,0.1,cubecolor);
 
        glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+     
 
 }
 
