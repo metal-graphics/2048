@@ -134,18 +134,15 @@ void loadTextures() {
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
 	);
 	
+	tex_2d[11] = SOIL_load_OGL_texture
+	(
+		"./pictures/board.png",
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
+	
 	glBindTexture(GL_TEXTURE_2D, tex_2d[0]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[1]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[2]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[3]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[4]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[5]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[6]);
-	glBindTexture(GL_TEXTURE_2D,tex_2d[7]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[8]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[9]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[10]);
-	glBindTexture(GL_TEXTURE_2D, tex_2d[11]);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
 	
@@ -153,6 +150,8 @@ void loadTextures() {
 } //loadTextures
 
 void initGL() {
+	
+   
    glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
    glClearDepth(1.0f);                   // Set background depth to farthest
    glEnable(GL_DEPTH_TEST);   // Enable depth testing for z-culling
@@ -160,6 +159,12 @@ void initGL() {
    glShadeModel(GL_SMOOTH);   // Enable smooth shading
    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);  // Nice perspective corrections
    
+ //  glEnable (GL_BLEND);
+  // glBlendFunc (GL_SRC_ALPHA, GL_ONE);
+   glEnable(GL_TEXTURE_2D);
+   glEnable(GL_POINT_SPRITE);
+   glTexEnvi(GL_POINT_SPRITE, GL_COORD_REPLACE, GL_TRUE);
+   glTexEnvi(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
    /* Load Textures*/
   loadTextures();
 
@@ -167,7 +172,7 @@ void initGL() {
 
 
 void DrawCube(float * color ){
-
+	glBindTexture(GL_TEXTURE_2D, tex_2d[1]);
     glColor3f(color[0],color[1],color[2]);
     glVertex3f( 1.0f, 1.0f,-1.0f);    // Top Right Of The Quad (Top)
     glVertex3f(-1.0f, 1.0f,-1.0f);    // Top Left Of The Quad (Top)
@@ -231,72 +236,84 @@ void changeColor(int i,int j) {
            cubecolor[0]=white[0];
             cubecolor[1]=white[1];
              cubecolor[2]=white[2];
+             glBindTexture(GL_TEXTURE_2D, tex_2d[0]);
             //cout<<"Color 0"<<endl;
             break;
         case 2:
             cubecolor[0]=grey[0];
              cubecolor[1]=grey[1];
               cubecolor[2]=grey[2];
+              glBindTexture(GL_TEXTURE_2D, tex_2d[1]);
               // cout<<"Color 2"<<endl;
             break;
         case 4:
             cubecolor[0]=wheatish[0];
              cubecolor[1]=wheatish[1];
               cubecolor[2]=wheatish[2];
+              glBindTexture(GL_TEXTURE_2D, tex_2d[2]);
              //  cout<<"Color 4"<<endl;
             break;
         case 8:
             cubecolor[0]=ong[0];
             cubecolor[1]=ong[1];
             cubecolor[2]=ong[2];
+            glBindTexture(GL_TEXTURE_2D, tex_2d[3]);
             // cout<<"Color 8"<<endl;
             break;
         case 16:
             cubecolor[0]=orangish[0];
             cubecolor[1]=orangish[1];
             cubecolor[2]=orangish[2];
+            glBindTexture(GL_TEXTURE_2D, tex_2d[4]);
             // cout<<"Color 16"<<endl;
             break;
         case 32:
             cubecolor[0]=orn[0];
              cubecolor[1]=orn[1];
               cubecolor[2]=orn[2];
+              glBindTexture(GL_TEXTURE_2D, tex_2d[5]);
             //   cout<<"Color 32"<<endl;
             break;
         case 64:
             cubecolor[0]=orange[0];
             cubecolor[1]=orange[1];
             cubecolor[2]=orange[2];
+            glBindTexture(GL_TEXTURE_2D, tex_2d[6]);
            //  cout<<"Color 64"<<endl;
             break;
         case 128:
             cubecolor[0]=orng[0];
             cubecolor[1]=orng[1];
             cubecolor[2]=orng[2];
+            glBindTexture(GL_TEXTURE_2D, tex_2d[7]);
            //  cout<<"Color 128"<<endl;
             break;
         case 256:
             cubecolor[0]=orng_yell[0];
             cubecolor[1]=orng_yell[1];
             cubecolor[2]=orng_yell[2];
+            glBindTexture(GL_TEXTURE_2D, tex_2d[8]);
             // cout<<"Color 256"<<endl;
             break;
         case 512:
             cubecolor[0]=yell_orng[0];
             cubecolor[1]=yell_orng[1];
             cubecolor[2]=yell_orng[2];
+            glBindTexture(GL_TEXTURE_2D, tex_2d[9]);
            //  cout<<"Color 512"<<endl;
             break;
         case 1024:
             cubecolor[0]=yellowish[0];
               cubecolor[1]=yellowish[1];
                 cubecolor[2]=yellowish[2];
+                glBindTexture(GL_TEXTURE_2D, tex_2d[10]);
               //   cout<<"Color 1024"<<endl;
             break;
         case 2048:
             cubecolor[0]=yellow[0];
              cubecolor[1]=yellow[1];
               cubecolor[2]=yellow[2];
+              glBindTexture(GL_TEXTURE_2D, tex_2d[11]);
              //  cout<<"Color 2048"<<endl;
     }
 
@@ -315,6 +332,7 @@ void display() {
    glMatrixMode(GL_MODELVIEW);     // To operate on model-view matrix
 
    // Render a color-cube consisting of 6 quads with different colors
+						glBindTexture(GL_TEXTURE_2D, tex_2d[12]);
                         createCube(0,0.2,-50,2, 2,0.1,quartz);
 
     cout<<"In Display Function"<<endl;
